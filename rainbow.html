@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你说得对但是彩虹奶奶vivo50</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e6e6e6;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00dbde, #fc00ff, transparent);
+        }
+        
+        .phrase {
+            font-size: 2.2rem;
+            margin: 40px 0;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phrase-text {
+            font-weight: bold;
+            color: #4dffea;
+            text-shadow: 0 0 5px rgba(77, 255, 234, 0.7);
+        }
+        
+        .loading-btn {
+            font-size: 1.8rem;
+            padding: 18px 45px;
+            margin-top: 30px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+            position: relative;
+            overflow: hidden;
+            min-width: 280px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .loading-btn:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.6);
+        }
+        
+        .loading-btn:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(37, 117, 252, 0.4);
+        }
+        
+        .loading-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading-btn .loading-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .shell-loader {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #00ff9d;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .bubble-container {
+            position: fixed;
+            bottom: 150px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.9), rgba(37, 117, 252, 0.9));
+            color: white;
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            white-space: nowrap;
+            opacity: 0;
+            z-index: 100;
+            max-width: 90%;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+        
+        .bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid rgba(37, 117, 252, 0.9);
+        }
+        
+        .bubble-float {
+            animation: floatUp 3s ease-in forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(-200px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-350px) scale(0.8);
+                opacity: 0;
+            }
+        }
+        
+        .btn-fade-in {
+            animation: fadeIn 0.3s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .explanation {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
+            border-left: 4px solid #6a11cb;
+        }
+        
+        .explanation h3 {
+            margin-bottom: 10px;
+            color: #4dffea;
+            text-align: center;
+        }
+        
+        .explanation ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .explanation li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .phrase {
+                font-size: 1.8rem;
+                min-height: 100px;
+            }
+            
+            .loading-btn {
+                font-size: 1.5rem;
+                padding: 15px 35px;
+                min-width: 250px;
+            }
+            
+            .bubble {
+                font-size: 1.5rem;
+                padding: 15px 25px;
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .phrase {
+                font-size: 1.5rem;
+                min-height: 90px;
+            }
+            
+            .loading-btn {
+                font-size: 1.3rem;
+                padding: 12px 25px;
+                min-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>你说得对但是彩虹奶奶vivo50</h1>
+        
+        <div class="phrase">
+            <span class="phrase-text">你说得对但是</span>
+        </div>
+        
+        <button id="loadingBtn" class="loading-btn">
+            <div class="loading-text">
+                <span>Loading</span>
+                <span class="shell-loader" id="shellLoader">|</span>
+            </div>
+        </button>
+        
+        <div class="explanation">
+            <h3>功能说明</h3>
+            <p>这是一个交互式特效页面，包含以下功能：</p>
+            <ul>
+                <li>点击按钮后，按钮变为<span class="highlight">不可点击状态</span></li>
+                <li>显示"彩虹奶奶vivo50"字符串气泡，并<span class="highlight">向上飘出页面</span></li>
+                <li>气泡飘出页面后<span class="highlight">自动删除</span></li>
+                <li>按钮在0.3秒内<span class="highlight">逐渐重新显现</span>并恢复点击状态</li>
+                <li>按钮上显示<span class="highlight">Shell风格加载动画</span>（| / - \）</li>
+            </ul>
+            <p>点击上方按钮体验效果！可以多次点击，每次都会创建新的气泡动画。</p>
+        </div>
+        
+        <div class="footer">
+            使用HTML、CSS和JavaScript实现 | 灵感来源：彩虹奶奶vivo50
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingBtn = document.getElementById('loadingBtn');
+            const shellLoader = document.getElementById('shellLoader');
+            const bubbleContainer = document.createElement('div');
+            bubbleContainer.className = 'bubble-container';
+            document.body.appendChild(bubbleContainer);
+            
+            // Shell风格加载动画字符序列
+            const loaderChars = ['|', '/', '-', '\\'];
+            let loaderIndex = 0;
+            let loaderInterval;
+            
+            // 定义要显示的字符串
+            const displayStr = "彩虹奶奶vivo50";
+            
+            // 启动加载动画
+            function startLoaderAnimation() {
+                loaderInterval = setInterval(() => {
+                    loaderIndex = (loaderIndex + 1) % loaderChars.length;
+                    shellLoader.textContent = loaderChars[loaderIndex];
+                }, 150);
+            }
+            
+            // 停止加载动画
+            function stopLoaderAnimation() {
+                clearInterval(loaderInterval);
+                shellLoader.textContent = '|';
+                loaderIndex = 0;
+            }
+            
+            // 创建气泡并启动动画
+            function createBubble() {
+                // 创建气泡元素
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.textContent = displayStr;
+                
+                // 将气泡添加到容器
+                bubbleContainer.appendChild(bubble);
+                
+                // 触发动画
+                setTimeout(() => {
+                    bubble.classList.add('bubble-float');
+                }, 10);
+                
+                // 动画结束后删除气泡
+                bubble.addEventListener('animationend', function() {
+                    bubble.remove();
+                });
+            }
+            
+            // 按钮点击事件处理
+            loadingBtn.addEventListener('click', function() {
+                // 禁用按钮
+                loadingBtn.disabled = true;
+                loadingBtn.style.opacity = '0.3';
+                
+                // 停止加载动画（因为按钮文本会改变）
+                stopLoaderAnimation();
+                
+                // 更改按钮文本为加载中
+                loadingBtn.querySelector('.loading-text').innerHTML = 
+                    '<span>显示中...</span>';
+                
+                // 创建气泡
+                createBubble();
+                
+                // 3秒后重新启用按钮（与动画时间匹配）
+                setTimeout(() => {
+                    // 恢复按钮文本和加载动画
+                    loadingBtn.querySelector('.loading-text').innerHTML = 
+                        '<span>Loading</span><span class="shell-loader" id="shellLoader">|</span>';
+                    
+                    // 重新获取loader元素引用
+                    const newShellLoader = document.getElementById('shellLoader');
+                    
+                    // 恢复按钮状态（使用淡入动画）
+                    loadingBtn.style.opacity = '1';
+                    loadingBtn.classList.remove('btn-fade-in');
+                    void loadingBtn.offsetWidth; // 触发重排以重置动画
+                    loadingBtn.classList.add('btn-fade-in');
+                    
+                    // 短暂延迟后启用按钮并重新启动加载动画
+                    setTimeout(() => {
+                        loadingBtn.disabled = false;
+                        // 重新启动加载动画
+                        loaderInterval = setInterval(() => {
+                            loaderIndex = (loaderIndex + 1) % loaderChars.length;
+                            newShellLoader.textContent = loaderChars[loaderIndex];
+                        }, 150);
+                    }, 300);
+                    
+                    // 移除淡入动画类
+                    setTimeout(() => {
+                        loadingBtn.classList.remove('btn-fade-in');
+                    }, 600);
+                    
+                }, 3000); // 匹配气泡动画时间
+            });
+            
+            // 页面加载后启动加载动画
+            startLoaderAnimation();
+        });
+    </script>
+</body>
+</html>
